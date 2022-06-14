@@ -1,4 +1,5 @@
 import {CityType} from "../02/02_02";
+import {addMoneyToBudget, repairHouse, toFireStaff} from "./03";
 
 let city: CityType
 
@@ -63,32 +64,29 @@ beforeEach(() => {
 })
 // 01. создайте тип CityType
 // 02. заполните объект city, чтобы тесты ниже прошли
-test('test city should contains 3 houses', () => {
-    expect(city.houses.length).toBe(3)
+test('Budget should be changed for Hospital', () => {
+    addMoneyToBudget(city.governmenBuildings[0], 100000)
 
-    expect(city.houses[0].buildedAt).toBe(2012)
-    expect(city.houses[0].repaired).toBe(false)
-    expect(city.houses[0].address.number).toBe(100)
-    expect(city.houses[0].address.street.title).toBe('White street')
+    expect(city.governmenBuildings[0].budget).toBe(300000)
 
-    expect(city.houses[1].buildedAt).toBe(2008)
-    expect(city.houses[1].repaired).toBe(false)
-    expect(city.houses[1].address.number).toBe(100)
-    expect(city.houses[1].address.street.title).toBe('Happy street')
-
-    expect(city.houses[2].buildedAt).toBe(2020)
-    expect(city.houses[2].repaired).toBe(false)
 })
-test('test city should contains hospital and fire station', () => {
-    expect(city.governmenBuildings.length).toBe(2)
+test('Budget should be changed for Fire-Station', () => {
+    addMoneyToBudget(city.governmenBuildings[1], -100000)
 
-    expect(city.governmenBuildings[0].type).toBe('Hospital')
-    expect(city.governmenBuildings[0].budget).toBe(200000)
-    expect(city.governmenBuildings[0].staffCount).toBe(200)
-    expect(city.governmenBuildings[0].address.street.title).toBe('Central Str')
+    expect(city.governmenBuildings[1].budget).toBe(400000)
+})
+// test('Houses should be destroyed', () => {
+//     demolishHousesOnTheStreet(city, 'Happy street')
+//
+//     expect(city.governmenBuildings[1].budget).toBe(400000)
+// })
+test('House should be repared', () => {
+    repairHouse(city.houses[1])
 
-    expect(city.governmenBuildings[1].type).toBe('Fire-station')
-    expect(city.governmenBuildings[1].budget).toBe(500000)
-    expect(city.governmenBuildings[1].staffCount).toBe(1000)
-    expect(city.governmenBuildings[1].address.street.title).toBe('South Str')
+    expect(city.houses[1].repaired).toBe(true) // либо .toBeTruthy
+})
+test('Staff should be increased', () => {
+    toFireStaff(city.governmenBuildings[1], 20)
+
+    expect(city.governmenBuildings[1].staffCount).toBe(980) // либо .toBeTruthy
 })
