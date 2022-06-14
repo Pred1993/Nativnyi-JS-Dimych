@@ -1,10 +1,15 @@
-import {CityType, GovernmenBuildingsType} from "../02/02_02";
+import {CityType, GovernmenBuildingsType, HouseType} from "../02/02_02";
 
-export function demolishHousesOnTheStreet(city: CityType, street: string) {
-    city.houses = city.houses.filter(t => t.address.street.title !== street)
+export function getHousesOnTheStreet(governmenBuildings: Array<GovernmenBuildingsType>) {
+   return governmenBuildings.map(g =>
+   g.address.street.title)
 }
 
-export function getBuildingsWithStaffCountGreaterThen(governmenBuildings: Array<GovernmenBuildingsType>, number: number) {
-  return governmenBuildings.filter(g => g.staffCount > 500)
+export function getStreetTitlesOfHouses(houses: Array<HouseType>) {
+  return houses.map(h => h.address.street.title)
+
+}
+export function createMessages(houses: Array<HouseType>) {
+    return houses.map(h => `Hello guys from ${h.address.street.title}`)
 
 }
